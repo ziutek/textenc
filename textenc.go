@@ -278,7 +278,7 @@ var iso8859tab = []func([]byte) string{
 	DecodeISO8859_15,
 }
 
-// DecodeISO8859 decodes s encoded in ISO8859-part encodsg. It panics if
+// DecodeISO8859 decodes s encoded in ISO8859-part encoding. It panics if
 // part < 1 || part == 12 || part > 15.
 func DecodeISO8859(part int, s []byte) string {
 	if part < 1 || part == 12 || part > 15 {
