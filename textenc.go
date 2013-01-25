@@ -150,7 +150,7 @@ var iso6937twoBytes = []map[byte]rune{
 		'A': 'Ä', 'E': 'Ë', 'I': 'Ï', 'O': 'Ö', 'U': 'Ü', 'Y': 'Ÿ',
 		'a': 'ä', 'e': 'ë', 'i': 'ï', 'o': 'ö', 'u': 'ü', 'y': 'ÿ',
 	}, { // unused 0xC9
-	}, { // Ring 0xCA
+	}, { // Rsg 0xCA
 		'A': 'Å', 'U': 'Ů', 'a': 'å', 'u': 'ů',
 	}, { // Cedilla 0xCB
 		'C': 'Ç', 'G': 'Ģ', 'K': 'Ķ', 'L': 'Ļ', 'N': 'Ņ', 'R': 'Ŗ', 'S': 'Ş',
@@ -170,16 +170,16 @@ var iso6937twoBytes = []map[byte]rune{
 	},
 }
 
-func DecodeISO6937(in []byte) string {
-	out := make([]rune, 0, len(in))
-	for i := 0; i < len(in); i++ {
-		c := in[i]
+func DecodeISO6937(s []byte) string {
+	out := make([]rune, 0, len(s))
+	for i := 0; i < len(s); i++ {
+		c := s[i]
 		if c < 0xA0 {
 			out = append(out, rune(c))
 			continue
 		}
-		if c >= 0xC1 && c <= 0xCF && c != 0xC9 && c != 0xCC && i+1 < len(in) {
-			r, ok := iso6937twoBytes[c-0xC1][in[i+1]]
+		if c >= 0xC1 && c <= 0xCF && c != 0xC9 && c != 0xCC && i+1 < len(s) {
+			r, ok := iso6937twoBytes[c-0xC1][s[i+1]]
 			if ok {
 				out = append(out, r)
 				i++
@@ -191,9 +191,9 @@ func DecodeISO6937(in []byte) string {
 	return string(out)
 }
 
-func decodeISO8859(table []rune, in []byte) string {
-	out := make([]rune, len(in))
-	for i, c := range in {
+func decodeISO8859(table []rune, s []byte) string {
+	out := make([]rune, len(s))
+	for i, c := range s {
 		if c < 0xa0 {
 			out[i] = rune(c)
 			continue
@@ -202,62 +202,62 @@ func decodeISO8859(table []rune, in []byte) string {
 	}
 	return string(out)
 }
-func DecodeISO8859_1(in []byte) string {
-	return decodeISO8859(iso8859_1, in)
+func DecodeISO8859_1(s []byte) string {
+	return decodeISO8859(iso8859_1, s)
 }
 
-func DecodeISO8859_2(in []byte) string {
-	return decodeISO8859(iso8859_2, in)
+func DecodeISO8859_2(s []byte) string {
+	return decodeISO8859(iso8859_2, s)
 }
 
-func DecodeISO8859_3(in []byte) string {
-	return decodeISO8859(iso8859_3, in)
+func DecodeISO8859_3(s []byte) string {
+	return decodeISO8859(iso8859_3, s)
 }
 
-func DecodeISO8859_4(in []byte) string {
-	return decodeISO8859(iso8859_4, in)
+func DecodeISO8859_4(s []byte) string {
+	return decodeISO8859(iso8859_4, s)
 }
 
-func DecodeISO8859_5(in []byte) string {
-	return decodeISO8859(iso8859_5, in)
+func DecodeISO8859_5(s []byte) string {
+	return decodeISO8859(iso8859_5, s)
 }
 
-func DecodeISO8859_6(in []byte) string {
+func DecodeISO8859_6(s []byte) string {
 	// BUG: two bytes characters not handled
-	return decodeISO8859(iso8859_6, in)
+	return decodeISO8859(iso8859_6, s)
 }
 
-func DecodeISO8859_7(in []byte) string {
-	return decodeISO8859(iso8859_7, in)
+func DecodeISO8859_7(s []byte) string {
+	return decodeISO8859(iso8859_7, s)
 }
 
-func DecodeISO8859_8(in []byte) string {
-	return decodeISO8859(iso8859_8, in)
+func DecodeISO8859_8(s []byte) string {
+	return decodeISO8859(iso8859_8, s)
 }
 
-func DecodeISO8859_9(in []byte) string {
-	return decodeISO8859(iso8859_9, in)
+func DecodeISO8859_9(s []byte) string {
+	return decodeISO8859(iso8859_9, s)
 }
 
-func DecodeISO8859_10(in []byte) string {
-	return decodeISO8859(iso8859_10, in)
+func DecodeISO8859_10(s []byte) string {
+	return decodeISO8859(iso8859_10, s)
 }
 
-func DecodeISO8859_11(in []byte) string {
+func DecodeISO8859_11(s []byte) string {
 	// BUG: two bytes characters not handled
-	return decodeISO8859(iso8859_11, in)
+	return decodeISO8859(iso8859_11, s)
 }
 
-func DecodeISO8859_13(in []byte) string {
-	return decodeISO8859(iso8859_13, in)
+func DecodeISO8859_13(s []byte) string {
+	return decodeISO8859(iso8859_13, s)
 }
 
-func DecodeISO8859_14(in []byte) string {
-	return decodeISO8859(iso8859_14, in)
+func DecodeISO8859_14(s []byte) string {
+	return decodeISO8859(iso8859_14, s)
 }
 
-func DecodeISO8859_15(in []byte) string {
-	return decodeISO8859(iso8859_15, in)
+func DecodeISO8859_15(s []byte) string {
+	return decodeISO8859(iso8859_15, s)
 }
 
 var iso8859tab = []func([]byte) string{
@@ -278,11 +278,11 @@ var iso8859tab = []func([]byte) string{
 	DecodeISO8859_15,
 }
 
-// DecodeISO8859 decodes in encoded in ISO8859-part encoding. It panics if
+// DecodeISO8859 decodes s encoded in ISO8859-part encodsg. It panics if
 // part < 1 || part == 12 || part > 15.
-func DecodeISO8859(part int, in []byte) string {
+func DecodeISO8859(part int, s []byte) string {
 	if part < 1 || part == 12 || part > 15 {
 		panic("not supported table number")
 	}
-	return iso8859tab[part-1](in)
+	return iso8859tab[part-1](s)
 }
