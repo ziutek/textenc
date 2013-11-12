@@ -1,1 +1,1 @@
-[doc](http://gopkgdoc.appspot.com/pkg/github.com/ziutek/textenc)
+[doc](http://godoc.org/github.com/ziutek/textenc)
